@@ -2,8 +2,6 @@
     "recommendations": [
         "ritwickdey.liveserver",
         "bracketpaircolordlw.bracket-pair-color-dlw",
-        "xabikos.javascriptsnippets",
-        "formulahendry.auto-rename-tag",
-        "BracketPairColorDLW.bracket-pair-color-dlw"
+        "xabikos.javascriptsnippets"
     ]
 }
