@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>udemy marathon form</title>
+</head>
+<body>
+    <h1>
+        Race Registration!
+    </h1>
+    <form action="/form">
+        <div>
+            <label for="firstname">FIRST NAME</label><input type="text" id="firstname" required>
+            <label for="lastname">LAST NAME</label><input type="text" id="lastname" required>
+        </div>
+        <p>select a race::</p>
+        <div>
+        <input type="radio" name="racetype" value="Fun run 5k">Fun run 5k<br>
+        <input type="radio" name="racetype" value="Half marathon">Half marathon<br>
+        <input type="radio" name="racetype" value="Full marathon">Full marathon<br>
+        </div>
+        <div>
+            <label for="email">EMAIL</label><input type="email" id="email" required>
+            <label for="password">PASSWORD</label><input type="password" id="lastname" required>
+        </div>
+        <div>
+            SELECT AGE GROUP::
+            <select name="agegroup" id="agegroup">
+                <option value="under 18">Under 18</option>
+                <option value="18-30">18-30</option>
+                <option value="above 30">Above 30</option>
+            </select>
+        </div>
+        <button>REGISTER</button>
+    </form>
+</body>
+</html>
