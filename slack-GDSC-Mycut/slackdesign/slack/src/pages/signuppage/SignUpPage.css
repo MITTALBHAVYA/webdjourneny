@@ -1,0 +1,25 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0); /* Transparent background */
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+  }
+  .logo a{
+    color: #FFFFFF;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 0.5vw;
+    text-decoration: none;
+    font-family: 'Quicksand';
+    margin-left: 1rem;
+    letter-spacing: 0.1em;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
