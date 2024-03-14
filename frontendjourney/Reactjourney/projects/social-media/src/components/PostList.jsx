@@ -5,24 +5,8 @@ import WelcomeMessage from "./WelcomeMessage";
 import LoadingSpinner from "./LoadingSpinner";
 
 const PostList = () => {
-    const { postList, addInitialPosts } = useContext(PostListData);
-    const [fetching,setfetching] = useState(false);
-    useEffect(() => {
-        setfetching(true);
-        const controller = new AbortController();
-        const signal = controller.signal;
-        fetch('https://dummyjson.com/posts',{signal})
-            .then((res) => res.json())
-            .then((data) => {
-                addInitialPosts(data.posts);
-                setfetching(false);
-            });
+    const { postList, fetching } = useContext(PostListData);
 
-        return ()=>{
-            console.log("Cleaning up UseEffect.");
-            controller.abort();
-        }
-    },[]);
     
     return <>
         {fetching && <LoadingSpinner/>}
