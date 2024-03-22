@@ -1,0 +1,11 @@
+{
+  "name": "peepcodingbackend",
+  "version": "1.0.0",
+  "description": "for the learning purpose of backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BhavyaMittal",
+  "license": "ISC"
+}
