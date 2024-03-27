@@ -2,10 +2,14 @@
   "name": "peepcodingbackend",
   "version": "1.0.0",
   "description": "for the learning purpose of backend",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "BhavyaMittal",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "nodemon": "^3.1.0"
+  }
 }
