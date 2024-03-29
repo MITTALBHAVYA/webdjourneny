@@ -3,12 +3,27 @@ const app = express();
 app.use(express.json());
 app.listen(3000);
 
-let users={};
-app.get('/users',(req,res)=>{
+let users=[
+    { 
+        'id':1,
+        'name':"Bhavya"
+    },
+    { 
+        'id':2,
+        'name':"Mittal"
+    },
+    { 
+        'id':3,
+        'name':"Kavya"
+    }
+];
+app.get('/user',(req,res)=>{
+    console.log(req.query);
     res.send(users);
+
 })
 
-app.post('/users',(req,res)=>{
+app.post('/user',(req,res)=>{
     console.log(req.body);
     users=req.body;
     res.json({
@@ -18,7 +33,7 @@ app.post('/users',(req,res)=>{
 })
 
 //update -> patch
-app.patch('/users',(req,res)=>{
+app.patch('/user',(req,res)=>{
     console.log('req.body->',req.body);
     let dataToBeUpdated = req.body;
     for(key in dataToBeUpdated){
@@ -29,9 +44,16 @@ app.patch('/users',(req,res)=>{
     })
 });
 //to delete a data
-app.delete('/users',(req,res)=>{
+app.delete('/user',(req,res)=>{
     users={};
     res.json({
         message:"data has been deleted"
     });
 });
+
+//params
+app.get('/user/:userName',(req,res)=>{
+    console.log(req.params.userName);
+    console.log(req.params);
+    res.send("user id is received");
+})
