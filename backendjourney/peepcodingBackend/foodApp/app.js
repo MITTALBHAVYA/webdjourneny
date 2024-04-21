@@ -1,27 +1,11 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
-const emailValidator = require('email-validator');
+const userModel = require('./models/userModel');
+const cookieParser = require('cookie-parser');
+
 app.use(express.json());
 app.listen(3000);
-
-// let users=[
-//     { 
-//         'id':1,
-//         'name':"Bhavya"
-//     },
-//     { 
-//         'id':2,
-//         'name':"Mittal"
-//     },
-//     { 
-//         'id':3,
-//         'name':"Kavya"
-//     }
-// ];
-
-//mini app banayenge
-
+app.use(cookieParser());
 const userRouter = express.Router();
 const authRouter = express.Router();
 app.use('/user',userRouter);
@@ -33,6 +17,12 @@ userRouter
 .post(postUser)
 .patch(updateUser)
 .delete(deleteUser);
+userRouter
+.route('/getCookies')
+.get(getCookies);
+userRouter
+.route('/setCookies')
+.get(setCookies);
 
 userRouter
 .route('/:id')
@@ -49,8 +39,6 @@ function middleware1(req,res,next){
 }
 function middleware2(req,res){
     console.log("middleware2 executed");
-    // next();
-    // res.json({message:"middleware2 ended req/res cycle"});
     console.log("middleware2 ended req/res cycle");
     res.sendFile('/public/index.html',{root:__dirname});
 
@@ -75,9 +63,6 @@ async function updateUser(req,res){
     console.log('req.body->',req.body);
     let dataToBeUpdated = req.body;
     let user = await userModel.findOneAndUpdate({email:'kavya123@gmail.com'},dataToBeUpdated);
-    // for(key in dataToBeUpdated){
-    //     users[key]=dataToBeUpdated[key];
-    // }
     res.json({
         message:"data updated successfully",
         data:user
@@ -85,7 +70,6 @@ async function updateUser(req,res){
 };
 
 async function deleteUser(req,res){
-    // users={};
     let dataToBeDeleted=req.body;
     let user = await userModel.findOneAndDelete(dataToBeDeleted);
     res.json({
@@ -94,95 +78,53 @@ async function deleteUser(req,res){
     });
 };
 
-function getUserById(req,res){
+async function getUserById(req, res) {
     console.log(req.params.id);
     let paramId = req.params.id;
-    let obj = {};
-    for(let i=0;i<users.length;i++){
-        if(users[i]['id']==paramId){
-            obj = users[i];
-        }
-    }
 
-    res.json({
-        message:"req received",
-        data:obj
-    });
+    try {
+        let user = await userModel.findById(paramId); // Fetch user by ID from MongoDB
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        res.json({
+            message: "req received",
+            data: user
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Internal Server Error",
+        });
+    }
 }
 
-function getSignUp(req,res,next){
-    
+function getSignUp(req,res,next){ 
     console.log("getSignUp called");
-    // res.sendFile('public/index.html',{root: __dirname});
     next();
 }
 
 async function postSignUp(req,res){
     let dataObj = req.body;
     let user=await userModel.create(dataObj);
-    //  console.log("backend",user)
     res.json({
         message:"user signed up",
         data:user
     });
 }
-const db_link='mongodb+srv://bhavya:bhavya@cluster0.yxwygwr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-mongoose.connect(db_link)
-.then(function(db){
-    console.log(db);
-    console.log('db connected');
-})
-.catch(function(err){
-    console.log(err);
-})
 
-const userSchema = mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-    },
-    email:{
-        type:String,
-        required:true,
-        unique:true,
-        validate: function(){
-            return emailValidator.validate(this.email);
-        }
-    },
-    password:{
-        type:String,
-        required:true,
-        minLength:8
-    },
-    confirmPassword:{
-        type:String,
-        required:true,
-        minLength:8,
-        validate : function(){
-            return this.confirmPassword==this.password;
-        }
-    }
+function setCookies(req,res){
+  res.cookie('IsLoggedIn',true,{maxAge:1000*60*60*24,secure:true,httpOnly:true});
+  res.cookie('isPrimeMember',true);
+  res.send('cookies has been set');
+}
 
-});
+function getCookies(req,res){
+    let cookies = req.cookies.IsLoggedIn; 
+    console.log(cookies);
+    res.send('cookies received');
+}
 
-userSchema.pre('save',function(){
-    this.confirmPassword=undefined;
-    console.log('before saving in db',this);
-})
-userSchema.post('save',function(doc){
-    console.log('after saving in db',doc);
-})
-
-//model
-const userModel = mongoose.model('userModel',userSchema);
-
-// (async function createUser(){
-//     let user = {
-//         name:'Bhavya',
-//         email:'bhavyva@gmail.com',
-//         password:'123456789',
-//         confirmPassword:'123456789'
-//     };
-//     let data =await userModel.create(user);
-//     console.log(data);
-// })();
