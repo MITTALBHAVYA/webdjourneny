@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {JWT_KEY} = require('../../secreats');
 
-function ProtectRoute(req,res,next){
+function protectRoute(req,res,next){
     if(req.cookies.login){
         let isVerified = jwt.verify(req.cookies.login,JWT_KEY);
         if(isVerified){
@@ -20,4 +20,4 @@ function ProtectRoute(req,res,next){
     }
 };
 
-module.exports=ProtectRoute;
+module.exports=protectRoute;
