@@ -97,6 +97,10 @@ module.exports.protectRoute=async function protectRoute(req, res, next) {
                 next();
             }
             else {
+                const client=req.get('User-Agent');
+                if(client.includes("Mozilla")){
+                    return res.redirect('/login');
+                }
                 return res.json({
                     message: "User is not valid"
                 })
@@ -136,7 +140,7 @@ module.exports.forgetpassword=async function forgetpassword(req,res){
     }
 };
 
-async function resetpassword(req,res){
+module.exports.resetpassword=async function resetpassword(req,res){
     try{
     const token = req.params.token;
     let {password,confirmPassword} = req.body;
@@ -159,4 +163,11 @@ catch(err){
         message:err.message
     })
 }
+}
+
+module.exports.logout=function logout(req,res){
+    res.cookie('login','',{maxAge:1})
+    res.json({
+        message:"user logged out"
+    })
 }

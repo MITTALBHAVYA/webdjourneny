@@ -2,7 +2,7 @@ const express = require('express');
 const userRouter = express.Router();
 const { getUser, updateUser, deleteUser, getAllUser } 
 =require('../controllers/userController');
-const {signup,login,isAuthorised,protectRoute}
+const {signup,login,isAuthorised,protectRoute,logout,forgetpassword,resetpassword}
 =require('../controllers/authController');
 
 // User routes
@@ -33,6 +33,10 @@ userRouter
 userRouter
 .route('/resetpassword/:token')
 .post(resetpassword)
+
+userRouter
+.route('/logout')
+.get(logout)
 // Admin-specific routes with isAuthorised middleware
 userRouter
 .use(isAuthorised(["admin"]));
