@@ -1,15 +1,18 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 
-const cookieParser = require('cookie-parser');
-
 app.use(express.json());
-app.listen(3000);
 app.use(cookieParser());
+
 const userRouter = require('./Routers/userRouter');
-const authRouter = require('./Routers/authRouter');
-app.use('/user',userRouter);
-app.use('/auth',authRouter);
+// const authRouter = require('./Routers/authRouter');
+const planRouter = require('./Routers/planRouter');
 
+app.use('/user', userRouter);
+app.use('/plans', planRouter);
+// app.use('/auth', authRouter);
 
-
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
