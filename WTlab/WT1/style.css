@@ -1,0 +1,24 @@
+body{
+    background-image: url("https://www.freevector.com/uploads/vector/preview/7712/FreeVector-Plants-Background-Template.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+h1{
+    color: aqua;
+}
+table{
+    border: 2px solid;
+    border-color: aqua;
+    color: aqua;
+}
+th,td{
+    border: 2px solid aqua;
+}
