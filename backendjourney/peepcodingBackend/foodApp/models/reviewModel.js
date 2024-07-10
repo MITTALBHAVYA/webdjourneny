@@ -25,12 +25,12 @@ const reviewSchema = new mongoose.Schema({
         default:Date.now()
     },
     user : {
-        type : mangoose.Schema.ObjectId,
+        type : mongoose.Schema.ObjectId,
         ref:'userModel',
         req : [true,'review must belong to a user']
     },
     plan : {
-        type : mangoose.Schema.ObjectId,
+        type : mongoose.Schema.ObjectId,
         ref:'planModel',
         req : [true,'review must belong to a existing plan']
     }

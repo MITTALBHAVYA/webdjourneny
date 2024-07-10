@@ -9,7 +9,7 @@ planRouter
 .get(getAllPlans)
 
 planRouter
-.route('/top/:id')
+.route('/top3')
 .get(top3plans)
 
 planRouter
